@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  cfpartner-psql:
+    container_name: cfpartner-psql
+    image: postgres:17
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - psql_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    networks:
+      - app_net
+
+  cfpartner-web:
+    container_name: cfpartner-web
+    build: ./web/
+    image: cfpartner-web
+    command: bundle exec rails server -b 0.0.0.0
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./web:/app:cached
+      - ./web/tmp/capybara:/app/tmp/capybara
+      - bundle_data:/usr/local/bundle:cached
+      - /app/vendor
+      - /app/tmp
+      - /app/log
+      - /app/.git
+    env_file:
+      - .env
+    depends_on:
+      - cfpartner-psql
+    ports:
+      - 3000:3000 # ポートフォワード
+    networks:
+      - app_net
+
+  cfpartner-chrome:
+    container_name: cfpartner-chrome
+    image: seleniarm/standalone-chromium
+    ports:
+      - "4444:4444"
+    # ref: https://github.com/seleniumhq-community/docker-seleniarm#--shm-size2g
+    shm_size: 2gb
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.0.0.0/24
+
+volumes:
+  bundle_data:
+  psql_data:
+  node_modules:
