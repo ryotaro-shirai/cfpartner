@@ -1,0 +1,117 @@
+# .coderabbit.yaml
+
+# 言語・基本設定
+system_language: "ja-JP"             # レビューを行う際の言語（英語／日本語どちらでも可）
+early_access: false                  # ベータ機能を使うかどうか
+
+reviews:
+  profile: "assertive"                # 厳密なレビュー（chill / assertive）
+  request_changes_workflow: false     # 必要なら「変更要求」ワークフローを使うか
+  high_level_summary: true           # PRの概要を出してもらうか
+  poem: false                        # レビューに詩や余白コメントを入れてもらうか
+  review_status: true                # レビュー結果（OK／要改善等）を明示するか
+  collapse_walkthrough: false        # 長いウォークスルーを折りたたむか
+  auto_review:
+    enabled: true                    # PR作成時に自動レビューを行うか
+    drafts: false                    # ドラフトPRにもレビューをかけるか
+
+# 対象から除外するブランチ・タイトル・ラベル
+ignored_branch: "wip/*, experimental/*"
+ignored_titles: "WIP, DO NOT REVIEW"
+limit_reviews_by_label: "review-needed"
+
+# パスフィルタ（レビュー対象／除外パス）
+path_filters:
+  - "!**/node_modules/**"
+  - "!**/vendor/**"
+  - "!**/log/**"
+  - "!**/tmp/**"
+  - "**/*.rb"
+  - "**/*.erb"
+  - "**/*.rake"
+
+# ファイル・ディレクトリ別の指示（Rails／Ruby向け）
+path_instructions:
+  - path: "app/models/**/*.rb"
+    instructions: |
+      Focus on:
+        - Single Responsibility: modelはデータアクセス・バリデーションに専念しているか
+        - Callback乱用の回避（特にafter_save系）
+        - N+1クエリ・includes漏れ
+        - スコープの安全性と再利用性
+        - バリデーションロジックの複雑化を防ぐ
+      Severity guide:
+        - Critical: コールバックや生SQLによるデータ破壊リスク
+        - Major: N+1・複雑なロジック混入
+        - Minor: 命名・コメント不備
+
+  - path: "app/controllers/**/*.rb"
+    instructions: |
+      Focus on:
+        - Fat Controller防止（ロジックはService / FormObjectへ）
+        - Strong Parameters適切化（permit忘れやpermit!の乱用を防ぐ）
+        - エラー処理の統一（rescue_fromなど）
+        - before_actionの依存関係循環がないか
+        - JSONレスポンス整形の共通化
+      Severity guide:
+        - Critical: パラメータ汚染・例外未処理
+        - Major: ロジック肥大化・命名不統一
+        - Minor: 冗長なレスポンス構築
+
+  - path: "app/services/**/*.rb"
+    instructions: |
+      Review for:
+        - 単一責務・命名の一貫性
+        - Railsモデルに依存しすぎない設計
+        - トランザクション境界が明確か
+        - ログ出力やエラー処理の適切さ
+        - 外部API呼び出し時の例外対応・リトライ
+      Severity guide:
+        - Critical: データ整合性・例外漏れ
+        - Major: テスタビリティ欠如
+        - Minor: 命名・コメント
+
+  - path: "spec/**/*.rb"
+    instructions: |
+      Review for:
+        - テストケースの意図が明確か（Given-When-Then構成）
+        - FactoryBotでの依存関係明確化
+        - テストが実装依存していないか
+        - it句の粒度（1テスト1期待値が原則）
+        - system specがE2Eテストとして網羅しているか
+      Severity guide:
+        - Critical: テスト不足・false positive
+        - Major: 不安定テスト（sleep / order依存）
+        - Minor: 命名・重複コード
+
+  - path: "lib/**/*.rb"
+    instructions: |
+      Review for:
+        - Rails層と独立して再利用できるか
+        - 例外処理とログ出力の標準化
+        - 不要なMonkey Patchを避けているか
+
+  - path: "**/*.rake"
+    instructions: |
+      Review for:
+        - idempotency（複数回実行しても壊れない）
+        - ロギング・エラーハンドリング
+        - Rails runnerでの実行想定・依存関係明確化
+
+# ツール／静的解析設定（Rails／Ruby用）
+# tools:
+#   rubocop:
+#     enabled: true
+#     config_file: ".rubocop.yml"
+#   brakeman:
+#     enabled: true
+#   semgrep:
+#     enabled: true
+#     config_file: "config/semgrep.yml"
+
+# ナレッジベース・ログ
+knowledge_base:
+  enable: true
+
+# レポート／リリースノート生成
+release_notes: true
