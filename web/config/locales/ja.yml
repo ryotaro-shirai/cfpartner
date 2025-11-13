@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    models:
+      event: イベント
+    attributes:
+      event:
+        name: イベント名
+        url: URL
+        cfp_status: CfP募集状況
+        cfp_start_at: CfP募集開始日時
+        cfp_end_at: CfP募集終了日時
