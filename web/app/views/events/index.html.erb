@@ -1,0 +1,10 @@
+<h1>CfPartner</h1>
+<% @events.each do |event| %>
+    <a href="<%= event.url%>"><h3><%= event.name %></h3></a>
+    <ul>
+        <li><%= event.cfp_status %></li>
+        <% if event.cfp_start_at && event.cfp_end_at %>
+            <li><%= l(event.cfp_start_at, format: :long) %>〜<%= l(event.cfp_end_at, format: :long) %></li>
+        <% end%>
+    </ul>
+<% end %>
