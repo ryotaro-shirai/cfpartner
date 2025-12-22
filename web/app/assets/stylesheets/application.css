@@ -8,3 +8,247 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+:root {
+  --bg: #f7f9fb;
+  --card-bg: #ffffff;
+  --text: #1f2a3d;
+  --muted: #6b7280;
+  --border: #e3e8f0;
+  --primary: #2563eb;
+  --primary-soft: #e0e7ff;
+  --open: #0f9d58;
+  --upcoming: #f59e0b;
+  --closed: #ef4444;
+  --done: #475569;
+  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Noto Sans JP", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at 10% 20%, #eef2ff 0%, #f7f9fb 35%, #f7f9fb 100%);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page {
+  max-width: 1100px;
+  padding: 40px 20px 64px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 6px 10px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border-radius: 999px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.page-description {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.events-section {
+  margin-top: 24px;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.event-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(17, 24, 39, 0.12);
+}
+
+.event-card-link {
+  display: block;
+  color: inherit;
+}
+
+.event-card-link:hover .event-title {
+  color: var(--primary);
+}
+
+.event-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #e5e7eb, #f1f5f9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.event-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-thumb.placeholder {
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+}
+
+.event-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.event-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.badge-open {
+  color: #0f5132;
+  background: #d1fae5;
+}
+
+.badge-upcoming {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.badge-closed {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.badge-done {
+  color: #1f2937;
+  background: #e5e7eb;
+}
+
+.badge-neutral {
+  color: var(--muted);
+  background: #e5e7eb;
+}
+
+.event-deadline {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.event-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.event-title a:hover {
+  color: var(--primary);
+}
+
+.event-period {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.event-period.muted {
+  color: var(--muted);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 32px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: #f8fafc;
+  color: var(--muted);
+}
+
+.flash-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px 0;
+}
+
+.flash {
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  color: var(--text);
+}
+
+.flash-notice {
+  border-color: #bbf7d0;
+  background: #ecfdf3;
+  color: #166534;
+}
+
+.flash-alert {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  color: #9f1239;
+}
