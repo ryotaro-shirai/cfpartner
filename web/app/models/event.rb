@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  has_one_attached :image
   validates :name, length: { maximum: 50 }, presence: true
   validates :url, presence: true
   validates :cfp_status, presence: true

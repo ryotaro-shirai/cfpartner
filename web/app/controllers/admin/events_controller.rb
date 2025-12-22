@@ -15,6 +15,6 @@ class Admin::EventsController < AdminController
 
   private
     def event_params
-      params.expect(event: [:name, :url, :cfp_start_at, :cfp_end_at])
+      params.expect(event: [:name, :url, :cfp_start_at, :cfp_end_at, :image])
     end
 end

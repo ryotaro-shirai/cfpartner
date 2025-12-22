@@ -2,6 +2,9 @@
 <% @events.each do |event| %>
     <a href="<%= event.url%>"><h3><%= event.name %></h3></a>
     <ul>
+        <% if event.image.attached? %>
+            <li><%= image_tag event.image %></li>
+        <% end %>
         <li><%= event.cfp_status %></li>
         <% if event.cfp_start_at && event.cfp_end_at %>
             <li><%= l(event.cfp_start_at, format: :long) %>〜<%= l(event.cfp_end_at, format: :long) %></li>
