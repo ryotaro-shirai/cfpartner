@@ -9,7 +9,7 @@ class Event < ApplicationRecord
     now_on_call: 1, # CfP募集中
     end_of_call: 2, # CfP募集終了
     end_of_event: 3, # イベント終了
-  }
+  }, default: 0
 
   private
 

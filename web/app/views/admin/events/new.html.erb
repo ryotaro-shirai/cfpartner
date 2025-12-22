@@ -1,0 +1,23 @@
+<h2>イベント作成</h2>
+
+<%= render '/admin/shared/error_messages', resource: @event %>
+
+<%= form_with model: [:admin, @event] do |f| %>
+    <div class="form-group">
+        <%= f.label "イベント名" %>
+        <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label "URL" %>
+        <%= f.url_field :url, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label "CfP募集開始日時" %>
+        <%= f.datetime_select :cfp_start_at, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label "CfP募集終了日時" %>
+        <%= f.datetime_select :cfp_end_at, class: "form-control" %>
+    </div>
+    <%= f.submit%>
+<% end %>
