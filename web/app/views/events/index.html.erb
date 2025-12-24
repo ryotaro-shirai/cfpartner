@@ -13,9 +13,9 @@
         <% badge = cfp_status_badge(event) %>
         <%= link_to event.url, target: "_blank", rel: "noopener", class: "event-card-link" do %>
           <article class="event-card">
-            <% if event.image.attached? %>
+            <% if event.image_url.present? %>
               <div class="event-thumb">
-                <%= image_tag event.image, alt: "#{event.name}のイメージ" %>
+                <%= image_tag event.image_url, alt: "#{event.name}のイメージ" %>
               </div>
             <% else %>
               <div class="event-thumb placeholder">No image</div>
