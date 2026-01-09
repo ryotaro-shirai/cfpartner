@@ -4,6 +4,7 @@ class Event < ApplicationRecord
   validates :url, presence: true
   validates :cfp_status, presence: true
   validate :cfp_start_at_should_be_before_end_at
+  validate :event_start_at_should_be_before_end_at
 
   enum :cfp_status, {
     before_call: 0, # CfP募集前
@@ -18,6 +19,13 @@ class Event < ApplicationRecord
     return if cfp_start_at.nil? || cfp_end_at.nil?
     if cfp_start_at >= cfp_end_at
       errors.add(:cfp_start_at, "は終了日時より前に設定してください")
+    end
+  end
+
+  def event_start_at_should_be_before_end_at
+    return if event_start_at.nil? || event_end_at.nil?
+    if event_start_at >= event_end_at
+      errors.add(:event_start_at, "は終了日時より前に設定してください")
     end
   end
 end
