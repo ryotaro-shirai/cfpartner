@@ -11,7 +11,7 @@
     <div class="events-grid">
       <% @events.each do |event| %>
         <% badge = cfp_status_badge(event) %>
-        <%= link_to event.url, target: "_blank", rel: "noopener", class: "event-card-link" do %>
+        <%= link_to target_url_by_event_status(event), target: "_blank", rel: "noopener", class: "event-card-link" do %>
           <article class="event-card">
             <% if event.image_url.present? %>
               <div class="event-thumb">
@@ -24,20 +24,14 @@
             <div class="event-body">
               <div class="event-meta">
                 <span class="status-badge <%= badge[:tone] %>"><%= badge[:label] %></span>
-                <% if event.cfp_end_at.present? %>
-                  <span class="event-deadline">締切 <%= l(event.cfp_end_at, format: :long) %></span>
+                <% if should_display_days_left_until_deadline?(event) %>
+                  <span class="event-deadline">締切まで： <%= days_left_until(event.cfp_end_at) %></span>
                 <% end %>
               </div>
 
               <h3 class="event-title"><%= event.name %></h3>
 
-              <% if event.cfp_start_at.present? && event.cfp_end_at.present? %>
-                <p class="event-period"><%= l(event.cfp_start_at, format: :long) %> 〜 <%= l(event.cfp_end_at, format: :long) %></p>
-              <% elsif event.cfp_end_at.present? %>
-                <p class="event-period">〆切 <%= l(event.cfp_end_at, format: :long) %></p>
-              <% else %>
-                <p class="event-period muted">スケジュール未定</p>
-              <% end %>
+              <p class="event-period">募集期間：<%= event_period_by_cfp_status(event) %></p>
             </div>
           </article>
         <% end %>
