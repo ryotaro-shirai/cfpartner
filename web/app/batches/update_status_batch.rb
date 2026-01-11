@@ -27,7 +27,7 @@ class UpdateStatusBatch < Batch
     def update_status
       current_time = Time.current
       target_events = Event.where(cfp_status: [:no_information, :before_call, :now_on_call, :end_of_call])
-      target_no_information_events = target_events.where("cfp_status = '0' AND cfp_start_at IS NOT NULL")
+      target_no_information_events = target_events.where(cfp_status: :before_call).where.not(cfp_start_at: nil)
       target_before_call_events = target_events.where(cfp_status: :before_call, cfp_start_at: ..current_time)
       target_now_on_call_events = target_events.where(cfp_status: :now_on_call, cfp_end_at: ..current_time)
       target_end_of_call_events = target_events.where(cfp_status: :end_of_call, event_end_at: ..current_time)
