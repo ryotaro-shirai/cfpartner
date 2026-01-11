@@ -12,9 +12,14 @@ end
 
 class UpdateStatusBatch < Batch
   def exec
-    @logger.info "ステータス更新バッチが開始しました #{Time.current}"
-    update_status
-    @logger.info "ステータス更新バッチが正常に完了しました #{Time.current}"
+    begin
+      @logger.info "ステータス更新バッチが開始しました #{Time.current}"
+      update_status
+      @logger.info "ステータス更新バッチが正常に完了しました #{Time.current}"
+    rescue => e
+      @logger.info "ステータス更新バッチがエラーにより終了しました #{Time.current}"
+      @logger.error e
+    end
   end
 
   private
