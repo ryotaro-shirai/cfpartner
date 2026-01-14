@@ -18,6 +18,7 @@ class UpdateStatusBatch < Batch
     rescue => e
       @logger.info "ステータス更新バッチがエラーにより終了しました #{Time.current}"
       @logger.error e
+      raise 
     end
   end
 
