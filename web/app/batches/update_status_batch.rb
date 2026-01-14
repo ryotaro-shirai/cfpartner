@@ -6,7 +6,6 @@ class Batch
   def initialize
     @logger = Logger.new(BATCH_LOG_PATH, BATCH_LOG_ROTATION)
     @logger.level = Logger::INFO
-    exec
   end
 end
 
