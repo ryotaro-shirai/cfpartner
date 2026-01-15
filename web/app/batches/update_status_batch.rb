@@ -45,7 +45,7 @@ class UpdateStatusBatch < Batch
         count_target_now_on_call_events = target_now_on_call_events.update_all(cfp_status: :end_of_call)
         @logger.info "CfP募集中 → CfP募集終了：#{count_target_now_on_call_events}件"
 
-        count_target_end_of_call_events = target_end_of_call_events.update_all(cfp_status: :end_of_call)
+        count_target_end_of_call_events = target_end_of_call_events.update_all(cfp_status: :end_of_event)
         @logger.info "CfP募集終了 → イベント終了：#{count_target_end_of_call_events}件"
       end
     end
