@@ -1,5 +1,7 @@
 class Event < ApplicationRecord
   has_one_attached :image
+  has_many :talk_recruitments
+
   validates :name, length: { maximum: 50 }, presence: true
   validates :cfp_status, presence: true
   validate :cfp_start_at_should_be_before_end_at
