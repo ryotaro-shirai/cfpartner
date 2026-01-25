@@ -2,35 +2,40 @@ require 'rails_helper'
 
 RSpec.describe TalkRecruitment, type: :model do
   describe "validation" do
-    context "start_at が end_at よりも前の場合" do
+    context "when start_at is before end_at" do
       let!(:talk_recruitment) { build :talk_recruitment }
       it "is valid" do
         expect(talk_recruitment).to be_valid
       end
     end
 
-    context "start_at が end_at よりも後の場合" do
-      let!(:talk_recruitment) { build(:talk_recruitment, end_at: rand(1..10).days.from_now)}
+    context "when start_at is equal end_at" do
+      start_at_and_end_at_time = rand(31..40).days.from_now
+      let!(:talk_recruitment) { build(:talk_recruitment, start_at: start_at_and_end_at_time, end_at: start_at_and_end_at_time)}
       it "is invalid" do
         expect(talk_recruitment).to be_invalid
+        expect(talk_recruitment.errors[:start_at]).to include('は終了日時より前に設定してください')
       end
     end
 
-    context "start_at が end_at と同じ場合" do
-      it "is invalid" do
+    context 'when start_at after end_at' do
+      let!(:talk_recruitment) { build(:talk_recruitment, start_at: rand(51..60).days.from_now)}
+      it 'is invalid' do
+        expect(talk_recruitment).to be_invalid
+        expect(talk_recruitment.errors[:start_at]).to include('は終了日時より前に設定してください')
       end
     end
 
-    context "start_at が nil の場合" do
+    context 'when start_at is nil' do
       let!(:talk_recruitment) { build(:talk_recruitment, start_at: nil)}
-      it "is valid" do
+      it 'is valid' do
         expect(talk_recruitment).to be_valid
       end
     end
 
-    context "end_at が nil の場合" do
+    context 'when end_at is nil' do
       let!(:talk_recruitment) { build(:talk_recruitment, end_at: nil)}
-      it "is valid" do
+      it 'is valid' do
         expect(talk_recruitment).to be_valid
       end
     end

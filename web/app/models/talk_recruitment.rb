@@ -2,17 +2,14 @@ class TalkRecruitment < ApplicationRecord
   belongs_to :event
 
   validates :title, length: { maximum: 50 }, presence: true
-  validates :site_url, presence: true 
-  validates :status, presence: true
   validate :recruitment_start_at_should_be_before_end_at
 
   enum :status, {
-    no_information: 0, # 情報なし
-    before_call: 1, # CfP募集前
-    now_on_call: 2, # CfP募集中
-    end_of_call: 3, # CfP募集終了
-    end_of_event: 4, # イベント終了
-  }, default: 0
+    no_information: 1,
+    published_information: 2, # 募集情報公開
+    now_on_call: 3, # 募集中
+    finished_call: 4, # 募集終了
+  }, default: 1
 
   enum :talk_type, {
     session: 1, # セッション

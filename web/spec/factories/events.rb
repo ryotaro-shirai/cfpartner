@@ -1,10 +1,18 @@
 FactoryBot.define do
   factory :event do
-    sequence(:name) { |i| "TestEvent#{i}" }
-    url { "https://www.yahoo.co.jp/" }
-    cfp_status { "no_information" }
-    event_start_at { rand(1..30).days.from_now }
-    event_end_at { event_start_at + rand(1..30).days }
-    event_homepage_url { Faker::Internet.url }
+    name { Faker::Internet.name }
+    site_url { Faker::Internet.url }
+    status { :published_information }
+    start_at { rand(31..40).days.from_now }
+    end_at { rand(40..50).days.from_now }
+    deplicated_cfp_site_url { Faker::Internet.url }
+
+    trait :now_on_the_event do
+      status { :now_on_the_event }
+    end
+
+    trait :after_the_event do
+      status { :after_the_event }
+    end
   end
 end
