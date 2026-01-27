@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :event do
-    name { Faker::Internet.name }
+    name { Faker::Lorem.word + "event" }
     site_url { Faker::Internet.url }
     status { :published_information }
     start_at { rand(31..40).days.from_now }
-    end_at { rand(40..50).days.from_now }
+    end_at { rand(41..50).days.from_now }
     deprecated_cfp_site_url { Faker::Internet.url }
 
     trait :now_on_the_event do

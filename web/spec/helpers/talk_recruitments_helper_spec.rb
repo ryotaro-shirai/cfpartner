@@ -64,17 +64,21 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
       end
     end
 
-    context "when talk recruitment has end_at and has passed end_at" do
-      let!(:talk_recruitment){ create(:talk_recruitment, start_at:  Time.current.ago(1.day), end_at: Time.current.ago(1.hour))}
+    context "when talk recruitment has passed end_at" do
+      let!(:start_at){ Time.current.ago(2.days) }
+      let!(:end_at){ Time.current.ago(1.day) }
+      let!(:talk_recruitment){ create(:talk_recruitment, start_at: start_at, end_at: end_at)}
       it "return 締め切り済み" do
         expect(helper.days_left_until(talk_recruitment)).to eq "締め切り済み"
       end
     end
 
-    context "when talk recruitment has end_at and hasn't passed end_at" do
-      let!(:talk_recruitment){ create(:talk_recruitment, start_at:  Time.current.ago(1.day), end_at: Time.current.since(5.days))}
+    context "when talk recruitment hasn't passed end_at" do
+      let!(:start_at){ Time.current.ago(2.days) }
+      let!(:end_at){ Time.current.sinse(1.days) }
+      let!(:talk_recruitment){ create(:talk_recruitment, start_at: start_at, end_at: end_at)}
       it "return 締め切りまで" do
-        expect(helper.days_left_until(talk_recruitment)).to eq "締め切りまで：5日"
+        expect(helper.days_left_until(talk_recruitment)).to eq "締め切りまで：1日"
       end
     end
   end
@@ -87,18 +91,18 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
     end
 
     context "when datetime is not nil and give format" do
-      let!(:datetime){Time.new(2026, 1, 26, 12, 30, 45)}
-      let!(:format){:long}
+      let!(:datetime){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:format){ :long }
       it "return long format datetime" do
         expect(helper.formatted_datetime(datetime, format)).to eq "2026/01/26 12:30"
       end
     end
 
     context "when datetime is not nil and don't give format" do
-      let!(:datetime){Time.new(2026, 1, 26, 12, 30, 45)}
-      let!(:format){nil}
-      it "return long format datetime" do
-        expect(helper.formated_datetime(datetime, format)).to eq "2026年01月26日(月) 12時30分45秒 +0900"
+      let!(:datetime){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:format){ nil }
+      it "return default format datetime" do
+        expect(helper.formatted_datetime(datetime, format)).to eq "2026年01月26日(月) 12時30分45秒 +0900"
       end
     end
   end
