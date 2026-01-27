@@ -22,6 +22,8 @@
   --closed: #ef4444;
   --done: #475569;
   --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+  --shadow-hover: 0 18px 50px rgba(17, 24, 39, 0.12);
+  --ring: 0 0 0 4px rgba(240, 139, 113, 0.25);
 }
 
 * {
@@ -50,6 +52,11 @@ a {
 .page-header {
   text-align: left;
   margin-bottom: 28px;
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(227, 232, 240, 0.8);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: saturate(120%) blur(6px);
 }
 
 .eyebrow {
@@ -84,24 +91,25 @@ a {
 .talk-recruitments-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 18px;
+  gap: 22px;
 }
 
 .talk-recruitment-card {
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(227, 232, 240, 0.95);
   border-radius: 16px;
   box-shadow: var(--shadow);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 280px;
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
 .talk-recruitment-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 40px rgba(17, 24, 39, 0.12);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(37, 99, 235, 0.22);
 }
 
 .talk-recruitment-card-link {
@@ -139,7 +147,7 @@ a {
   padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   flex: 1;
 }
 
@@ -148,6 +156,7 @@ a {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .status-badge {
@@ -200,6 +209,8 @@ a {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.01em;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  font-variant-numeric: tabular-nums;
 }
 
 .deadline-icon {
@@ -242,6 +253,7 @@ a {
   font-size: 18px;
   font-weight: 800;
   line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 .talk-recruitment-title a:hover {
@@ -317,7 +329,7 @@ a {
   padding: 10px 16px;
   margin-top: 0;
   width: 100%;
-  background: var(--primary);
+  background: #F08B71; /* Coral */
   color: #ffffff;
   border-radius: 8px;
   font-size: 14px;
@@ -326,10 +338,11 @@ a {
   transition: background-color 150ms ease, transform 150ms ease;
   border: none;
   cursor: pointer;
+  min-height: 40px;
 }
 
 .talk-recruitment-button-secondary {
-  background: #334155;
+  background: #5097C4;
 }
 
 .talk-recruitment-button-closed {
@@ -337,13 +350,13 @@ a {
 }
 
 .talk-recruitment-button:hover {
-  background: #1d4ed8;
+  background: #e86f56;
   transform: translateY(-1px);
   color: #ffffff;
 }
 
 .talk-recruitment-button-secondary:hover {
-  background: #1f2937;
+  background: #3c7aa3;
 }
 
 .talk-recruitment-button-closed:hover {
@@ -352,6 +365,23 @@ a {
 
 .talk-recruitment-button:active {
   transform: translateY(0);
+}
+
+a:focus-visible,
+.talk-recruitment-button:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+@media (min-width: 520px) {
+  .talk-recruitment-actions {
+    flex-direction: row;
+  }
+
+  .talk-recruitment-button {
+    width: auto;
+    flex: 1 1 0;
+  }
 }
 
 .empty-state {
