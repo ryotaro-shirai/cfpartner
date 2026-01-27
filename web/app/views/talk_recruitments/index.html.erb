@@ -1,0 +1,51 @@
+<div class="page">
+  <header class="page-header">
+    <p class="eyebrow">CfP Tracker</p>
+    <h1 class="page-title">CfPartner</h1>
+    <p class="page-description">
+      カンファレンスのCfP期限をひと目で把握できるシンプルな一覧です。
+    </p>
+  </header>
+
+  <section class="talk-recruitments-section">
+    <div class="talk-recruitments-grid">
+      <% @talk_recruitments.each do |talk_recruitment| %>
+        <% badge = status_badge(talk_recruitment) %>
+          <article class="talk-recruitment-card">
+            <%= link_to talk_recruitment.event.site_url, target: "_blank", rel: "noopener", class: "talk-recruitment-card-link" do %>
+              <% if talk_recruitment.event.thumbnail_url.present? %>
+                <div class="talk-recruitment-thumb">
+                  <%= image_tag talk_recruitment.event.thumbnail_url, alt: "#{talk_recruitment.event.name}のイメージ" %>
+                </div>
+              <% else %>
+                <div class="talk-recruitment-thumb placeholder">No image</div>
+              <% end %>
+            <% end %>
+
+            <div class="talk-recruitment-body">
+              <div class="talk-recruitment-meta">
+                <span class="status-badge <%= badge[:tone] %>"><%= badge[:label] %></span>
+                <span class="talk-recruitment-deadline"><%= days_left_until(talk_recruitment) %></span>
+              </div>
+
+              <h3 class="talk-recruitment-title"><%= talk_recruitment.title %></h3>
+
+              <p class="talk-recruitment-period">提出締め切り：<%= formatted_datetime(talk_recruitment.end_at, :long) %></p>
+              <p class="talk-recruitment-period">イベント開催：<%= "#{formatted_datetime(talk_recruitment.event.start_at, :long)} 〜 #{formatted_datetime(talk_recruitment.event.end_at, :long)}" %></p>
+
+              <%= link_to talk_recruitment.site_url, target: "_blank", rel: "noopener", class: "talk-recruitment-button" do %>
+                Submit Proposal
+              <% end %>
+            </div>
+          </article>
+      <% end %>
+
+      <% if @talk_recruitments.empty? %>
+        <div class="empty-state">
+          <p>まだイベントが登録されていません。</p>
+          <p>左上の管理画面から追加してください。</p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</div>

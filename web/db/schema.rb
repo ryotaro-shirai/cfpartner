@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_04_125342) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_27_015908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,19 +43,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_04_125342) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.datetime "cfp_end_at"
-    t.datetime "cfp_start_at"
-    t.integer "cfp_status", null: false
     t.datetime "created_at", null: false
-    t.datetime "event_end_at", null: false
-    t.string "event_homepage_url", null: false
-    t.datetime "event_start_at", null: false
-    t.string "image_url"
+    t.datetime "deprecated_cfp_end_at"
+    t.string "deprecated_cfp_site_url", null: false
+    t.datetime "deprecated_cfp_start_at"
+    t.datetime "end_at", null: false
     t.string "name", null: false
+    t.string "site_url", null: false
+    t.datetime "start_at", null: false
+    t.integer "status", null: false
+    t.string "thumbnail_url"
     t.datetime "updated_at", null: false
-    t.string "url", null: false
+  end
+
+  create_table "talk_recruitments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "end_at"
+    t.bigint "event_id", null: false
+    t.string "site_url"
+    t.datetime "start_at"
+    t.integer "status", null: false
+    t.integer "talk_type"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_talk_recruitments_on_event_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "talk_recruitments", "events"
 end
