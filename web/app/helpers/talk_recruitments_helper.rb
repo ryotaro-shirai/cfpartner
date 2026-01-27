@@ -39,7 +39,7 @@ module TalkRecruitmentsHelper
   end
 
   def deadline_date(talk_recruitment)
-    return "情報なし" if talk_recruitment.status == "no_information"
+    return "情報なし" if talk_recruitment.status == "no_information" || talk_recruitment.end_at.nil?
     return formatted_datetime(talk_recruitment.end_at, :long)
   end
 
