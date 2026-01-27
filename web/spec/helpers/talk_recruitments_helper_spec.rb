@@ -75,7 +75,7 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
 
     context "when talk recruitment hasn't passed end_at" do
       let!(:start_at){ Time.current.ago(2.days) }
-      let!(:end_at){ Time.current.sinse(1.days) }
+      let!(:end_at){ Time.current.since(1.days) }
       let!(:talk_recruitment){ create(:talk_recruitment, start_at: start_at, end_at: end_at)}
       it "return 締め切りまで" do
         expect(helper.days_left_until(talk_recruitment)).to eq "締め切りまで：1日"
