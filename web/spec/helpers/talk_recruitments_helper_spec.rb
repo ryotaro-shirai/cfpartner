@@ -11,6 +11,8 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe TalkRecruitmentsHelper, type: :helper do
+  include ActiveSupport::Testing::TimeHelpers
+
   describe "#status_badge" do
 
     context "when event information is published" do
@@ -79,6 +81,47 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
       let!(:talk_recruitment){ create(:talk_recruitment, start_at: start_at, end_at: end_at)}
       it "return 締め切りまで" do
         expect(helper.days_left_until(talk_recruitment)).to eq "締め切りまで：1日"
+      end
+    end
+  end
+
+  describe "#deadline_chip" do
+    around do |example|
+      travel_to(Time.zone.local(2026, 1, 1, 12, 0, 0)) { example.run }
+    end
+
+    context "when end_at is nil" do
+      let!(:talk_recruitment){ create(:talk_recruitment, end_at: nil) }
+      it "returns info none chip" do
+        expect(helper.deadline_chip(talk_recruitment)).to eq({ label: "締め切り情報なし", tone: "deadline-muted" })
+      end
+    end
+
+    context "when end_at has passed" do
+      let!(:talk_recruitment){ create(:talk_recruitment, start_at: 2.days.ago, end_at: 1.day.ago) }
+      it "returns closed chip" do
+        expect(helper.deadline_chip(talk_recruitment)).to eq({ label: "締め切り済み", tone: "deadline-closed" })
+      end
+    end
+
+    context "when deadline is today" do
+      let!(:talk_recruitment){ create(:talk_recruitment, start_at: 1.day.ago, end_at: Time.current.change(hour: 23, min: 59)) }
+      it "returns today chip" do
+        expect(helper.deadline_chip(talk_recruitment)).to eq({ label: "本日締切", tone: "deadline-today" })
+      end
+    end
+
+    context "when deadline is within 3 days" do
+      let!(:talk_recruitment){ create(:talk_recruitment, start_at: 1.day.ago, end_at: 2.days.from_now) }
+      it "returns soon chip" do
+        expect(helper.deadline_chip(talk_recruitment)).to eq({ label: "あと2日", tone: "deadline-soon" })
+      end
+    end
+
+    context "when deadline is after 3 days" do
+      let!(:talk_recruitment){ create(:talk_recruitment, start_at: 1.day.ago, end_at: 5.days.from_now) }
+      it "returns default chip" do
+        expect(helper.deadline_chip(talk_recruitment)).to eq({ label: "あと5日", tone: "deadline-default" })
       end
     end
   end

@@ -23,6 +23,21 @@ module TalkRecruitmentsHelper
     return "締め切りまで：#{(talk_recruitment.end_at.to_date - Time.current.to_date).to_i}日"
   end
 
+  # UI 用の締め切りバッジ情報
+  def deadline_chip(talk_recruitment)
+    return { label: "締め切り情報なし", tone: "deadline-muted" } if talk_recruitment.end_at.nil?
+    return { label: "締め切り済み", tone: "deadline-closed" } if talk_recruitment.end_at < Time.current
+
+    days = (talk_recruitment.end_at.to_date - Time.current.to_date).to_i
+    if days.zero?
+      { label: "本日締切", tone: "deadline-today" }
+    elsif days <= 3
+      { label: "あと#{days}日", tone: "deadline-soon" }
+    else
+      { label: "あと#{days}日", tone: "deadline-default" }
+    end
+  end
+
   def deadline_date(talk_recruitment)
     return "情報なし" if talk_recruitment.status == "no_information"
     return formatted_datetime(talk_recruitment.end_at, :long)

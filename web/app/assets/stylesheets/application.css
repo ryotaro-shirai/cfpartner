@@ -191,11 +191,49 @@ a {
   background: #f1f5f9;
 }
 
-.talk-recruitment-deadline {
+.deadline-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
   font-size: 12px;
-  color: var(--muted);
-  padding: 6px 8px;
-  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.deadline-icon {
+  width: 14px;
+  height: 14px;
+  color: inherit;
+}
+
+.deadline-text {
+  white-space: nowrap;
+}
+
+.deadline-default {
+  color: #1d4ed8;
+  background: #e0e7ff;
+}
+
+.deadline-soon {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.deadline-today {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.deadline-closed {
+  color: #475569;
+  background: #e2e8f0;
+}
+
+.deadline-muted {
+  color: #94a3b8;
   background: #f8fafc;
 }
 
