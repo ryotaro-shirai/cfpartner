@@ -30,8 +30,8 @@
 
               <h3 class="talk-recruitment-title"><%= talk_recruitment.title %></h3>
 
-              <p class="talk-recruitment-period">提出締め切り：<%= l(talk_recruitment.end_at, format: :long) %></p>
-              <p class="talk-recruitment-period">イベント開催：<%= "#{l(talk_recruitment.event.start_at, format: :long)} 〜 #{l(talk_recruitment.event.end_at, format: :long)}" %></p>
+              <p class="talk-recruitment-period">提出締め切り：<%= formated_datetime(talk_recruitment.end_at, :long) %></p>
+              <p class="talk-recruitment-period">イベント開催：<%= "#{formated_datetime(talk_recruitment.event.start_at, :long)} 〜 #{formated_datetime(talk_recruitment.event.end_at, :long)}" %></p>
 
               <%= link_to talk_recruitment.site_url, target: "_blank", rel: "noopener", class: "talk-recruitment-button" do %>
                 Submit Proposal
