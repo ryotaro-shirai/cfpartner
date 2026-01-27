@@ -83,26 +83,40 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
     end
   end
 
-  describe "#formatted_datetime" do
-    context "when datetime is nil" do
-      it "return nil" do
-        expect(helper.formatted_datetime(nil)).to eq nil
+  describe "#deadline_date" do
+    context "when talk_recruitment.status is no_information" do
+      let!(:talk_recruitment){ create(:talk_recruitment, status: :no_information)}
+      it "return 情報なし" do
+        expect(helper.deadline_date(talk_recruitment)).to eq "情報なし"
       end
     end
 
-    context "when datetime is not nil and give format" do
-      let!(:datetime){ Time.new(2026, 1, 26, 12, 30, 45) }
-      let!(:format){ :long }
-      it "return long format datetime" do
-        expect(helper.formatted_datetime(datetime, format)).to eq "2026/01/26 12:30"
+    context "when talk_recruitment.status isn't no_information" do
+      let!(:end_at){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:talk_recruitment){ create(:talk_recruitment, status: :now_on_call, start_at: end_at.ago(10.days), end_at: end_at)}
+      it "return long format deadline date" do
+        expect(helper.deadline_date(talk_recruitment)).to eq "2026/01/26 12:30"
+      end
+    end
+  end
+
+  describe "#event_date" do
+
+    context "when start_at.date is equal end_at.date" do
+      let!(:start_at){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:end_at){ start_at.since(1.hour) }
+      let!(:event){ create(:event, start_at: start_at, end_at: end_at)}
+      it "return date" do
+        expect(helper.event_date(event)).to eq "2026/01/26"
       end
     end
 
-    context "when datetime is not nil and don't give format" do
-      let!(:datetime){ Time.new(2026, 1, 26, 12, 30, 45) }
-      let!(:format){ nil }
-      it "return default format datetime" do
-        expect(helper.formatted_datetime(datetime, format)).to eq "2026年01月26日(月) 12時30分45秒 +0900"
+    context "when start_at.date is not equal end_at.date" do
+      let!(:start_at){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:end_at){ start_at.since(2.days) }
+      let!(:event){ create(:event, start_at: start_at, end_at: end_at)}
+      it "return period" do
+        expect(helper.event_date(event)).to eq "2026/01/26 ~ 2026/01/28"
       end
     end
   end

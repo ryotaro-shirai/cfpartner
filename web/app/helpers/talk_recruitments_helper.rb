@@ -23,9 +23,23 @@ module TalkRecruitmentsHelper
     return "締め切りまで：#{(talk_recruitment.end_at.to_date - Time.current.to_date).to_i}日"
   end
 
-  def formatted_datetime(datetime, format = nil)
-    return nil if datetime.nil?
-    return l(datetime, format: format)
+  def deadline_date(talk_recruitment)
+    return "情報なし" if talk_recruitment.status == "no_information"
+    return formatted_datetime(talk_recruitment.end_at, :long)
   end
+
+  def event_date(event)
+    start_date = event.start_at.to_date
+    end_date = event.end_at.to_date
+
+    return formatted_datetime(start_date) if start_date == end_date
+    return "#{formatted_datetime(start_date)} ~ #{formatted_datetime(end_date)}"
+  end
+
+  private
+    def formatted_datetime(datetime, format = nil)
+      return nil if datetime.nil?
+      return l(datetime, format: format)
+    end
 
 end

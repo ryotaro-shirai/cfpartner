@@ -4,6 +4,8 @@ class Event < ApplicationRecord
 
   validates :name, length: { maximum: 50 }, presence: true
   validates :status, presence: true
+  validates :start_at, presence: true
+  validates :end_at, presence: true 
   validate :event_start_at_should_be_before_end_at
 
   enum :status, {
@@ -15,7 +17,6 @@ class Event < ApplicationRecord
   private
 
   def event_start_at_should_be_before_end_at
-    return if start_at.nil? || end_at.nil?
     if start_at >= end_at
       errors.add(:start_at, "は終了日時より前に設定してください")
     end
