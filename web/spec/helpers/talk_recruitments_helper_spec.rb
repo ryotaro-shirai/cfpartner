@@ -135,7 +135,7 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
     end
 
     context "when talk_recruitment.status isn't no_information" do
-      let!(:end_at){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:end_at){ Time.zone.local(2026, 1, 26, 12, 30, 45) }
       let!(:talk_recruitment){ create(:talk_recruitment, status: :now_on_call, start_at: end_at.ago(10.days), end_at: end_at)}
       it "return long format deadline date" do
         expect(helper.deadline_date(talk_recruitment)).to eq "2026/01/26 12:30"
@@ -146,7 +146,7 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
   describe "#event_date" do
 
     context "when start_at.date is equal end_at.date" do
-      let!(:start_at){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:start_at){ Time.zone.local(2026, 1, 26, 12, 30, 45) }
       let!(:end_at){ start_at.since(1.hour) }
       let!(:event){ create(:event, start_at: start_at, end_at: end_at)}
       it "return date" do
@@ -155,7 +155,7 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
     end
 
     context "when start_at.date is not equal end_at.date" do
-      let!(:start_at){ Time.new(2026, 1, 26, 12, 30, 45) }
+      let!(:start_at){ Time.zone.local(2026, 1, 26, 12, 30, 45) }
       let!(:end_at){ start_at.since(2.days) }
       let!(:event){ create(:event, start_at: start_at, end_at: end_at)}
       it "return period" do
