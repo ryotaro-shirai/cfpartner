@@ -79,10 +79,10 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
     end
   end
 
-  describe "#formated_datetime" do
+  describe "#formatted_datetime" do
     context "when datetime is nil" do
       it "return nil" do
-        expect(helper.formated_datetime(nil)).to eq nil
+        expect(helper.formatted_datetime(nil)).to eq nil
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe TalkRecruitmentsHelper, type: :helper do
       let!(:datetime){Time.new(2026, 1, 26, 12, 30, 45)}
       let!(:format){:long}
       it "return long format datetime" do
-        expect(helper.formated_datetime(datetime, format)).to eq "2026/01/26 12:30"
+        expect(helper.formatted_datetime(datetime, format)).to eq "2026/01/26 12:30"
       end
     end
 

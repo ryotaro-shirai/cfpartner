@@ -23,7 +23,7 @@ module TalkRecruitmentsHelper
     return "締め切りまで：#{(talk_recruitment.end_at.to_date - Time.current.to_date).to_i}日"
   end
 
-  def formated_datetime(datetime, format = nil)
+  def formatted_datetime(datetime, format = nil)
     return nil if datetime.nil?
     return l(datetime, format: format)
   end
