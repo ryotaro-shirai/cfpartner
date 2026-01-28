@@ -26,9 +26,10 @@ module TalkRecruitmentsHelper
   # UI 用の締め切りバッジ情報
   def deadline_chip(talk_recruitment)
     return { label: "締め切り情報なし", tone: "deadline-muted" } if talk_recruitment.end_at.nil?
-    return { label: "締め切り済み", tone: "deadline-closed" } if talk_recruitment.end_at < Time.current
+    current_time = Time.current
+    return { label: "締め切り済み", tone: "deadline-closed" } if talk_recruitment.end_at < current_time
 
-    days = (talk_recruitment.end_at.to_date - Time.current.to_date).to_i
+    days = (talk_recruitment.end_at.to_date - current_time.to_date).to_i
     if days.zero?
       { label: "本日締切", tone: "deadline-today" }
     elsif days <= 3
