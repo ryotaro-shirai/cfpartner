@@ -23,9 +23,39 @@ module TalkRecruitmentsHelper
     return "締め切りまで：#{(talk_recruitment.end_at.to_date - Time.current.to_date).to_i}日"
   end
 
-  def formatted_datetime(datetime, format = nil)
-    return nil if datetime.nil?
-    return l(datetime, format: format)
+  # UI 用の締め切りバッジ情報
+  def deadline_chip(talk_recruitment)
+    return { label: "締め切り情報なし", tone: "deadline-muted" } if talk_recruitment.end_at.nil?
+    current_time = Time.current
+    return { label: "締め切り済み", tone: "deadline-closed" } if talk_recruitment.end_at < current_time
+
+    days = (talk_recruitment.end_at.to_date - current_time.to_date).to_i
+    if days.zero?
+      { label: "本日締切", tone: "deadline-today" }
+    elsif days <= 3
+      { label: "あと#{days}日", tone: "deadline-soon" }
+    else
+      { label: "あと#{days}日", tone: "deadline-default" }
+    end
   end
+
+  def deadline_date(talk_recruitment)
+    return "情報なし" if talk_recruitment.status == "no_information" || talk_recruitment.end_at.nil?
+    return formatted_datetime(talk_recruitment.end_at, :long)
+  end
+
+  def event_date(event)
+    start_date = event.start_at.to_date
+    end_date = event.end_at.to_date
+
+    return formatted_datetime(start_date) if start_date == end_date
+    return "#{formatted_datetime(start_date)} ~ #{formatted_datetime(end_date)}"
+  end
+
+  private
+    def formatted_datetime(datetime, format = nil)
+      return nil if datetime.nil?
+      return l(datetime, format: format)
+    end
 
 end

@@ -33,19 +33,21 @@ RSpec.describe Event, type: :model do
 
     context 'when start_at is nil' do
       let!(:start_at) { nil }
-      let!(:end_at) { rand(41..50).days.from_now }
+      let!(:end_at) { rand(31..40).days.from_now }
       let!(:event) { build(:event, start_at: start_at, end_at: end_at) }
-      it 'is valid' do
-        expect(event).to be_valid
+      it 'is invalid' do
+        expect(event).to be_invalid
+        expect(event.errors[:start_at]).to include('を入力してください')
       end
     end
 
     context 'when end_at is nil' do
-      let!(:start_at) { rand(31..40).days.from_now }
+      let!(:start_at) { rand(41..50).days.from_now }
       let!(:end_at) { nil }
-      let!(:event) { build(:event, end_at: nil)}
-      it 'is valid' do
-        expect(event).to be_valid
+      let!(:event) { build(:event, start_at: start_at, end_at: end_at) }
+      it 'is invalid' do
+        expect(event).to be_invalid
+        expect(event.errors[:end_at]).to include('を入力してください')
       end
     end
   end
