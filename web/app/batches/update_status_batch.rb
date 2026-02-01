@@ -4,7 +4,15 @@ class Batch
   BATCH_LOG_ROTATION = 'weekly'.freeze
 
   def initialize
-    @logger = Logger.new(BATCH_LOG_PATH, BATCH_LOG_ROTATION)
+    logdev =
+      if Rails.env.production?
+        $stdout
+      else
+        FileUtils.mkdir_p(BATCH_LOG_PATH.dirname)
+        BATCH_LOG_PATH
+      end
+
+    @logger = Logger.new(logdev, BATCH_LOG_ROTATION)
     @logger.level = Logger::INFO
   end
 end
@@ -25,7 +33,7 @@ class UpdateStatusBatch < Batch
       @logger.info "ステータス更新バッチが正常に完了しました #{Time.current}"
     rescue => e
       @logger.info "ステータス更新バッチがエラーにより終了しました #{Time.current}"
-      @logger.error e
+      @logger.error e.full_message
       raise 
     end
   end
