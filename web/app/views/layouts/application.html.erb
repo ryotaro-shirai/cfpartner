@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <title><%= content_for(:title) || "App" %></title>
+    <title><%= content_for(:title) || "CfPartner - カンファレンスのCfP期限をひと目で把握" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="App">
+    <meta name="application-name" content="CfPartner">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="<%= content_for(:description) || "カンファレンスのCfP（Call for Proposal）期限をひと目で把握できるシンプルな一覧アプリケーション" %>">
+    
+    <%# OGP Meta Tags %>
+    <meta property="og:title" content="<%= content_for(:og_title) || content_for(:title) || "CfPartner - カンファレンスのCfP期限をひと目で把握" %>">
+    <meta property="og:description" content="<%= content_for(:og_description) || content_for(:description) || "カンファレンスのCfP（Call for Proposal）期限をひと目で把握できるシンプルな一覧アプリケーション" %>">
+    <meta property="og:type" content="<%= content_for(:og_type) || "website" %>">
+    <meta property="og:url" content="<%= content_for(:og_url) || request.original_url %>">
+    <% og_image_url = content_for(:og_image) || begin
+      # アセットパイプライン経由でOGP画像を取得（app/assets/images/ogp-default.png）
+      if defined?(image_url)
+        image_url("ogp-default.png") rescue nil
+      end
+    end || begin
+      # フォールバック: public/icon.png を使用
+      request.base_url + "/icon.png"
+    end %>
+    <meta property="og:image" content="<%= og_image_url %>">
+    <meta property="og:site_name" content="CfPartner">
+    <meta property="og:locale" content="ja_JP">
+    
+    <%# Twitter Card Meta Tags %>
+    <meta name="twitter:card" content="<%= content_for(:twitter_card) || "summary_large_image" %>">
+    <meta name="twitter:title" content="<%= content_for(:twitter_title) || content_for(:og_title) || content_for(:title) || "CfPartner" %>">
+    <meta name="twitter:description" content="<%= content_for(:twitter_description) || content_for(:og_description) || content_for(:description) || "カンファレンスのCfP期限をひと目で把握できるシンプルな一覧" %>">
+    <meta name="twitter:image" content="<%= content_for(:twitter_image) || og_image_url %>">
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -15,7 +41,6 @@
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
