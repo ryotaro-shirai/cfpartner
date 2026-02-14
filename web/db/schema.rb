@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_14_091230) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_14_093258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,9 +44,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_14_091230) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.datetime "deprecated_cfp_end_at"
-    t.string "deprecated_cfp_site_url"
-    t.datetime "deprecated_cfp_start_at"
     t.datetime "end_at", null: false
     t.string "name", null: false
     t.string "site_url", null: false
