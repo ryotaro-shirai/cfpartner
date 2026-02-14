@@ -8,6 +8,8 @@ class Event < ApplicationRecord
   validates :end_at, presence: true 
   validate :event_start_at_should_be_before_end_at
 
+  self.ignored_columns = [:deprecated_cfp_start_at, :deprecated_cfp_end_at, :deprecated_cfp_site_url]
+
   enum :status, {
     published_information: 1, # イベント情報公開
     now_on_the_event: 2, # イベント開催中
