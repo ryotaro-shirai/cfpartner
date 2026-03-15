@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Admin::Events", type: :request do
   include Admin::BasicAuthRequestHelper
-  let!(:auth_headers) { headers }
+  let!(:auth_headers) { basic_auth_headers }
 
   describe "GET /admin/events/new" do
     context "when authenticated with valid basic auth" do

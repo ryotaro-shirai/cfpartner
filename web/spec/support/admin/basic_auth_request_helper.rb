@@ -1,5 +1,5 @@
 module Admin::BasicAuthRequestHelper
-  def headers
+  def basic_auth_headers
     user = ENV["BASIC_AUTH_USER"]
     password = ENV["BASIC_AUTH_PASSWORD"]
 
