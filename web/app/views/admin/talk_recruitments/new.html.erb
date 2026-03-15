@@ -21,7 +21,7 @@
     </div>
     <div class="form-group">
         <%= f.label :status, "CfPステータス" %>
-        <%= f.select :status, TalkRecruitment.statuses.keys, class: "form-control" %>
+        <%= f.select :status, options_for_select( TalkRecruitment.statuses), class: "form-control" %>
     </div>
     <div class="form-group">
         <%= f.label :event, "イベント" %>
