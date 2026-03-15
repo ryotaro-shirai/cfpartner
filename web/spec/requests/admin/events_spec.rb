@@ -25,7 +25,6 @@ RSpec.describe "Admin::Events", type: :request do
     let!(:event_site_url) { "https://example.com" }
     let!(:event_start_at) { Time.current.ago(1.day) }
     let!(:event_end_at) { Time.current.since(1.day) }
-    let!(:event_status) { :now_on_the_event }
 
     context "when params is valid" do
       it 'creates an event and redirects' do
@@ -35,8 +34,7 @@ RSpec.describe "Admin::Events", type: :request do
               name: event_name,
               site_url: event_site_url,
               start_at: event_start_at,
-              end_at: event_end_at,
-              status: event_status
+              end_at: event_end_at
             }
           }, headers: auth_headers
         }.to change { Event.count }.by(1)  
@@ -54,8 +52,7 @@ RSpec.describe "Admin::Events", type: :request do
               name: "",
               site_url: event_site_url,
               start_at: event_start_at,
-              end_at: event_end_at,
-              status: event_status
+              end_at: event_end_at
             }
           }, headers: auth_headers
         }.to change { Event.count }.by(0)  
@@ -71,8 +68,7 @@ RSpec.describe "Admin::Events", type: :request do
               name: event_name,
               site_url: event_site_url,
               start_at: event_start_at,
-              end_at: event_end_at,
-              status: event_status
+              end_at: event_end_at
             }
           }
         }.to change { Event.count }.by(0)  

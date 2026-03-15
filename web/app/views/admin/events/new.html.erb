@@ -23,9 +23,5 @@
         <%= f.label :end_at, "イベント終了日時（必須）" %>
         <%= f.datetime_field :end_at, class: "form-control" %>
     </div>
-    <div class="form-group">
-        <%= f.label :status, "イベントステータス" %>
-        <%= f.select :status, Event.statuses.keys, class: "form-control" %>
-    </div>
     <%= f.submit%>
 <% end %>
