@@ -55,7 +55,7 @@ RSpec.describe "Admin::Events", type: :request do
               end_at: event_end_at
             }
           }, headers: auth_headers
-        }.to change { Event.count }.by(0)  
+        }.not_to change { Event.count }
         expect(response).to have_http_status(:unprocessable_content)
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe "Admin::Events", type: :request do
               end_at: event_end_at
             }
           }
-        }.to change { Event.count }.by(0)  
+        }.not_to change { Event.count }
         expect(response).to have_http_status(:unauthorized)
       end
     end

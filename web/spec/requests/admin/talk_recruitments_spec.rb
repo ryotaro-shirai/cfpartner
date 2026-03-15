@@ -62,7 +62,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
               event_id: talk_recruitment_event.id
             }
           }, headers: auth_headers
-        }.to change { TalkRecruitment.count }.by(0)  
+        }.not_to change { TalkRecruitment.count }
         expect(response).to have_http_status(:unprocessable_content)
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
               event_id: talk_recruitment_event.id
             }
           }
-        }.to change { TalkRecruitment.count }.by(0)  
+        }.not_to change { TalkRecruitment.count } 
         expect(response).to have_http_status(:unauthorized)
       end
     end
