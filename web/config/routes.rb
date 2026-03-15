@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   
   namespace :admin do
-    resources :events, only: %i[index new create show edit update destroy]
+    resources :events, only: %i[new create]
+    resources :talk_recruitments, only: %i[new create]
   end
 end

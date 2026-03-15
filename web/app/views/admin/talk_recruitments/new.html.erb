@@ -1,0 +1,35 @@
+<h2>CfP作成</h2>
+
+<%= render '/admin/shared/error_messages', resource: @talk_recruitment %>
+
+<%= form_with model: [:admin, @talk_recruitment] do |f| %>
+    <div class="form-group">
+        <%= f.label :title, "CfP名（必須）" %>
+        <%= f.text_field :title, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :site_url, "CfP募集URL" %>
+        <%= f.url_field :site_url, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :start_at, "CfP募集開始日時" %>
+        <%= f.datetime_field :start_at, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :end_at, "CfP終了日時" %>
+        <%= f.datetime_field :end_at, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :status, "CfPステータス" %>
+        <%= f.select :status, TalkRecruitment.statuses.keys, class: "form-control" %>
+    </div>
+    <div class="form-group">
+        <%= f.label :event, "イベント" %>
+        <%= f.collection_select :event_id,
+                            Event.all,
+                            :id,
+                            :name,
+                            class: "form-control" %>
+    </div>
+    <%= f.submit%>
+<% end %>
