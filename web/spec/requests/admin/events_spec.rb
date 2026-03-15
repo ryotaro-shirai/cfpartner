@@ -38,7 +38,7 @@ RSpec.describe "Admin::Events", type: :request do
             }
           }, headers: auth_headers
         }.to change { Event.count }.by(1)  
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(new_admin_event_path)
         expect(flash[:notice]).to include("イベントを作成しました")
       end

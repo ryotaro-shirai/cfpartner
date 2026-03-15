@@ -43,7 +43,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
             }
           }, headers: auth_headers
         }.to change { TalkRecruitment.count }.by(1)  
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(new_admin_talk_recruitment_path)
         expect(flash[:notice]).to include("CfPを作成しました")
       end
