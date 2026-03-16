@@ -21,20 +21,20 @@ RSpec.describe "Admin::Events", type: :request do
   end
 
   describe "POST /admin/events" do
-    let!(:event_name) { "test_event" }
-    let!(:event_site_url) { "https://example.com" }
-    let!(:event_start_at) { Time.current.ago(1.day) }
-    let!(:event_end_at) { Time.current.since(1.day) }
+    let!(:name) { "test_event" }
+    let!(:site_url) { "https://example.com" }
+    let!(:start_at) { Time.current.ago(1.day) }
+    let!(:end_at) { Time.current.since(1.day) }
 
     context "when params is valid" do
       it 'creates an event and redirects' do
         expect {
           post admin_events_path, params: {
             event: {
-              name: event_name,
-              site_url: event_site_url,
-              start_at: event_start_at,
-              end_at: event_end_at
+              name: name,
+              site_url: site_url,
+              start_at: start_at,
+              end_at: end_at
             }
           }, headers: auth_headers
         }.to change { Event.count }.by(1)
@@ -50,9 +50,9 @@ RSpec.describe "Admin::Events", type: :request do
           post admin_events_path, params: {
             event: {
               name: "",
-              site_url: event_site_url,
-              start_at: event_start_at,
-              end_at: event_end_at
+              site_url: site_url,
+              start_at: start_at,
+              end_at: end_at
             }
           }, headers: auth_headers
         }.not_to change { Event.count }
@@ -65,10 +65,10 @@ RSpec.describe "Admin::Events", type: :request do
         expect {
           post admin_events_path, params: {
             event: {
-              name: event_name,
-              site_url: event_site_url,
-              start_at: event_start_at,
-              end_at: event_end_at
+              name: name,
+              site_url: site_url,
+              start_at: start_at,
+              end_at: end_at
             }
           }
         }.not_to change { Event.count }

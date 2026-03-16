@@ -21,24 +21,24 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
   end
 
   describe "POST /admin/talk_recruitments" do
-    let!(:talk_recruitment_title) { "test_talk_recruitment" }
-    let!(:talk_recruitment_site_url) { "https://example.com" }
-    let!(:talk_recruitment_start_at) { Time.current.ago(1.day) }
-    let!(:talk_recruitment_end_at) { Time.current.since(1.day) }
-    let!(:talk_recruitment_talk_type) { :session }
-    let!(:talk_recruitment_event) { create(:event) }
+    let!(:title) { "test_talk_recruitment" }
+    let!(:site_url) { "https://example.com" }
+    let!(:start_at) { Time.current.ago(1.day) }
+    let!(:end_at) { Time.current.since(1.day) }
+    let!(:talk_type) { :session }
+    let!(:event) { create(:event) }
 
     context "when params is valid" do
       it 'creates an talk_recruitment and redirects' do
         expect {
           post admin_talk_recruitments_path, params: {
             talk_recruitment: {
-              title: talk_recruitment_title,
-              site_url: talk_recruitment_site_url,
-              start_at: talk_recruitment_start_at,
-              end_at: talk_recruitment_end_at,
-              talk_type: talk_recruitment_talk_type,
-              event_id: talk_recruitment_event.id
+              title: title,
+              site_url: site_url,
+              start_at: start_at,
+              end_at: end_at,
+              talk_type: talk_type,
+              event_id: event.id
             }
           }, headers: auth_headers
         }.to change { TalkRecruitment.count }.by(1)
@@ -54,11 +54,11 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
           post admin_talk_recruitments_path, params: {
             talk_recruitment: {
               title: "",
-              site_url: talk_recruitment_site_url,
-              start_at: talk_recruitment_start_at,
-              end_at: talk_recruitment_end_at,
-              talk_type: talk_recruitment_talk_type,
-              event_id: talk_recruitment_event.id
+              site_url: site_url,
+              start_at: start_at,
+              end_at: end_at,
+              talk_type: talk_type,
+              event_id: event.id
             }
           }, headers: auth_headers
         }.not_to change { TalkRecruitment.count }
@@ -71,12 +71,12 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
         expect {
           post admin_talk_recruitments_path, params: {
             talk_recruitment: {
-              title: talk_recruitment_title,
-              site_url: talk_recruitment_site_url,
-              start_at: talk_recruitment_start_at,
-              end_at: talk_recruitment_end_at,
-              talk_type: talk_recruitment_talk_type,
-              event_id: talk_recruitment_event.id
+              title: title,
+              site_url: site_url,
+              start_at: start_at,
+              end_at: end_at,
+              talk_type: talk_type,
+              event_id: event.id
             }
           }
         }.not_to change { TalkRecruitment.count }
