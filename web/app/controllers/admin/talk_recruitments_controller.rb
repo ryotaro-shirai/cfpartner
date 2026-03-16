@@ -15,6 +15,6 @@ class Admin::TalkRecruitmentsController < AdminController
 
   private
     def talk_recruitment_params
-      params.expect(talk_recruitment: [ :title, :site_url, :start_at, :end_at, :status, :event_id ])
+      params.expect(talk_recruitment: [ :title, :site_url, :start_at, :end_at, :event_id ])
     end
 end
