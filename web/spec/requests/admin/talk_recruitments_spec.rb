@@ -25,6 +25,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
     let!(:talk_recruitment_site_url) { "https://example.com" }
     let!(:talk_recruitment_start_at) { Time.current.ago(1.day) }
     let!(:talk_recruitment_end_at) { Time.current.since(1.day) }
+    let!(:talk_recruitment_talk_type) { :session }
     let!(:talk_recruitment_event) { create(:event) }
 
     context "when params is valid" do
@@ -36,6 +37,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
               site_url: talk_recruitment_site_url,
               start_at: talk_recruitment_start_at,
               end_at: talk_recruitment_end_at,
+              talk_type: talk_recruitment_talk_type,
               event_id: talk_recruitment_event.id
             }
           }, headers: auth_headers
@@ -55,6 +57,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
               site_url: talk_recruitment_site_url,
               start_at: talk_recruitment_start_at,
               end_at: talk_recruitment_end_at,
+              talk_type: talk_recruitment_talk_type,
               event_id: talk_recruitment_event.id
             }
           }, headers: auth_headers
@@ -72,6 +75,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
               site_url: talk_recruitment_site_url,
               start_at: talk_recruitment_start_at,
               end_at: talk_recruitment_end_at,
+              talk_type: talk_recruitment_talk_type,
               event_id: talk_recruitment_event.id
             }
           }

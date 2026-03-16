@@ -23,5 +23,14 @@
         <%= f.label :event, "イベント" %>
         <%= f.collection_select :event_id, @events, :id, :name, class: "form-control" %>
     </div>
+    <div class="form-group">
+        <%= f.label :talk_type, "トークタイプ" %>
+        <%= f.select :talk_type, options_for_select([
+            ["セッション", "session"],
+            ["ショートセッション", "short_session"],
+            ["LT", "lightning_talk"],
+            ["その他", "other"]
+            ]), class: "form-control" %>
+    </div>
     <%= f.submit%>
 <% end %>
