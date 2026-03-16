@@ -1,7 +1,6 @@
 class Batch
-
   BATCH_LOG_PATH = Rails.root.join("log", "batch.log")
-  BATCH_LOG_ROTATION = 'weekly'.freeze
+  BATCH_LOG_ROTATION = "weekly".freeze
 
   def initialize
     logdev =
@@ -34,12 +33,12 @@ class UpdateStatusBatch < Batch
     rescue => e
       @logger.info "ステータス更新バッチがエラーにより終了しました #{Time.current}"
       @logger.error e.full_message
-      raise 
+      raise
     end
   end
 
   private
-  
+
     def update_events_status(current_time = Time.current)
       count_update_to_after_the_event = Event.where(end_at: ...current_time).where.not(status: :after_the_event).update_all(status: :after_the_event)
       @logger.info "after_the_event になったイベント数：#{count_update_to_after_the_event}件"

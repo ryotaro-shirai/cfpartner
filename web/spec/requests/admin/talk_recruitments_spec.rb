@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Admin::TalkRecruitments", type: :request do
-
   include Admin::BasicAuthRequestHelper
   let!(:auth_headers) { basic_auth_headers }
 
@@ -32,7 +31,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
     context "when params is valid" do
       it 'creates an talk_recruitment and redirects' do
         expect {
-          post admin_talk_recruitments_path, params: { 
+          post admin_talk_recruitments_path, params: {
             talk_recruitment: {
               title: talk_recruitment_title,
               site_url: talk_recruitment_site_url,
@@ -42,7 +41,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
               event_id: talk_recruitment_event.id
             }
           }, headers: auth_headers
-        }.to change { TalkRecruitment.count }.by(1)  
+        }.to change { TalkRecruitment.count }.by(1)
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(new_admin_talk_recruitment_path)
         expect(flash[:notice]).to include("CfPを作成しました")
@@ -52,7 +51,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
     context "when params is invalid" do
       it 'does not create an talk_recruitment and returns 422' do
         expect {
-          post admin_talk_recruitments_path, params: { 
+          post admin_talk_recruitments_path, params: {
             talk_recruitment: {
               title: "",
               site_url: talk_recruitment_site_url,
@@ -70,7 +69,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
     context "when no basic auth header is provided" do
       it "does not create an talk_recruitment and returns 401" do
         expect {
-          post admin_talk_recruitments_path, params: { 
+          post admin_talk_recruitments_path, params: {
             talk_recruitment: {
               title: talk_recruitment_title,
               site_url: talk_recruitment_site_url,
@@ -80,7 +79,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
               event_id: talk_recruitment_event.id
             }
           }
-        }.not_to change { TalkRecruitment.count } 
+        }.not_to change { TalkRecruitment.count }
         expect(response).to have_http_status(:unauthorized)
       end
     end

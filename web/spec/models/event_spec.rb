@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
   describe 'validation' do
-
     context 'when start_at is before end_at' do
       let!(:start_at) { rand(31..40).days.from_now }
       let!(:end_at) { rand(41..50).days.from_now }
@@ -14,7 +13,7 @@ RSpec.describe Event, type: :model do
 
     context 'when start_at is equal end_at' do
       let!(:start_at_and_end_at_time) { rand(31..40).days.from_now }
-      let!(:event) { build(:event, start_at: start_at_and_end_at_time, end_at: start_at_and_end_at_time)}
+      let!(:event) { build(:event, start_at: start_at_and_end_at_time, end_at: start_at_and_end_at_time) }
       it 'is invalid' do
         expect(event).to be_invalid
         expect(event.errors[:start_at]).to include('は終了日時より前に設定してください')

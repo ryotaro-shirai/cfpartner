@@ -29,7 +29,7 @@ RSpec.describe "Admin::Events", type: :request do
     context "when params is valid" do
       it 'creates an event and redirects' do
         expect {
-          post admin_events_path, params: { 
+          post admin_events_path, params: {
             event: {
               name: event_name,
               site_url: event_site_url,
@@ -37,7 +37,7 @@ RSpec.describe "Admin::Events", type: :request do
               end_at: event_end_at
             }
           }, headers: auth_headers
-        }.to change { Event.count }.by(1)  
+        }.to change { Event.count }.by(1)
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(new_admin_event_path)
         expect(flash[:notice]).to include("イベントを作成しました")
@@ -47,7 +47,7 @@ RSpec.describe "Admin::Events", type: :request do
     context "when params is invalid" do
       it 'does not create an event and returns 422' do
         expect {
-          post admin_events_path, params: { 
+          post admin_events_path, params: {
             event: {
               name: "",
               site_url: event_site_url,
@@ -63,7 +63,7 @@ RSpec.describe "Admin::Events", type: :request do
     context "when no basic auth header is provided" do
       it "does not create an event and returns 401" do
         expect {
-          post admin_events_path, params: { 
+          post admin_events_path, params: {
             event: {
               name: event_name,
               site_url: event_site_url,

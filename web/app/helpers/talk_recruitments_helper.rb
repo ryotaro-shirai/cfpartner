@@ -5,7 +5,7 @@ module TalkRecruitmentsHelper
     "now_on_call" => { label: "募集中", tone: "badge-open" },
     "finished_call" => { label: "募集終了", tone: "badge-closed" },
     "now_on_the_event" => { label: "イベント開催中", tone: "badge-now-on" },
-    "after_the_event" => { label: "イベント終了", tone: "badge-done" },
+    "after_the_event" => { label: "イベント終了", tone: "badge-done" }
   }.freeze
 
   def status_badge(talk_recruitment)
@@ -20,7 +20,7 @@ module TalkRecruitmentsHelper
   def days_left_until(talk_recruitment)
     return "締め切り情報なし" if talk_recruitment.end_at.nil?
     return "締め切り済み" if talk_recruitment.end_at < Time.current
-    return "締め切りまで：#{(talk_recruitment.end_at.to_date - Time.current.to_date).to_i}日"
+    "締め切りまで：#{(talk_recruitment.end_at.to_date - Time.current.to_date).to_i}日"
   end
 
   # UI 用の締め切りバッジ情報
@@ -41,7 +41,7 @@ module TalkRecruitmentsHelper
 
   def deadline_date(talk_recruitment)
     return "情報なし" if talk_recruitment.status == "no_information" || talk_recruitment.end_at.nil?
-    return formatted_datetime(talk_recruitment.end_at, :long)
+    formatted_datetime(talk_recruitment.end_at, :long)
   end
 
   def event_date(event)
@@ -49,13 +49,12 @@ module TalkRecruitmentsHelper
     end_date = event.end_at.to_date
 
     return formatted_datetime(start_date) if start_date == end_date
-    return "#{formatted_datetime(start_date)} ~ #{formatted_datetime(end_date)}"
+    "#{formatted_datetime(start_date)} ~ #{formatted_datetime(end_date)}"
   end
 
   private
     def formatted_datetime(datetime, format = nil)
       return nil if datetime.nil?
-      return l(datetime, format: format)
+      l(datetime, format: format)
     end
-
 end
