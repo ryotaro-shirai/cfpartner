@@ -16,6 +16,8 @@ class Event < ApplicationRecord
     after_the_event: 3 # イベント終了
   }, default: 1
 
+  scope :upcoming, -> { where(status: :published_information) }
+
   private
 
   def event_start_at_should_be_before_end_at
