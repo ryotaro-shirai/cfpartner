@@ -25,11 +25,11 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
     let!(:site_url) { "https://example.com" }
     let!(:start_at) { Time.current.ago(1.day) }
     let!(:end_at) { Time.current.since(1.day) }
-    let!(:talk_type) { :session }
+    let!(:talk_type) { :short_session }
     let!(:event) { create(:event) }
 
     context "when params is valid" do
-      it 'creates an talk_recruitment and redirects' do
+      it 'creates a talk_recruitment and redirects' do
         expect {
           post admin_talk_recruitments_path, params: {
             talk_recruitment: {
@@ -49,7 +49,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
     end
 
     context "when params is invalid" do
-      it 'does not create an talk_recruitment and returns 422' do
+      it 'does not create a talk_recruitment and returns 422' do
         expect {
           post admin_talk_recruitments_path, params: {
             talk_recruitment: {
@@ -67,7 +67,7 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
     end
 
     context "when no basic auth header is provided" do
-      it "does not create an talk_recruitment and returns 401" do
+      it "does not create a talk_recruitment and returns 401" do
         expect {
           post admin_talk_recruitments_path, params: {
             talk_recruitment: {
