@@ -51,25 +51,25 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  describe '#upcoming' do
+  describe '.accepting_cfp' do
     context 'when event status is published_information' do
       let!(:event) { create(:event, status: :published_information) }
       it 'return value including event' do
-        expect(Event.upcoming).to include event
+        expect(Event.accepting_cfp).to include event
       end
     end
 
     context 'when event status is now_on_the_event' do
       let!(:event) { create(:event, status: :now_on_the_event) }
       it 'return value not including event' do
-        expect(Event.upcoming).not_to include event
+        expect(Event.accepting_cfp).not_to include event
       end
     end
 
     context 'when event status is after_the_event' do
       let!(:event) { create(:event, status: :after_the_event) }
       it 'return value not including event' do
-        expect(Event.upcoming).not_to include event
+        expect(Event.accepting_cfp).not_to include event
       end
     end
   end

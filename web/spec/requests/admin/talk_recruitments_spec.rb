@@ -5,10 +5,12 @@ RSpec.describe "Admin::TalkRecruitments", type: :request do
   let!(:auth_headers) { basic_auth_headers }
 
   describe "GET /admin/talk_recruitments/new" do
+    let!(:event) { create(:event)  }
     context "when authenticated with valid basic auth" do
-      it 'returns 200' do
+      it 'returns 200 and include accepting cfp events' do
         get new_admin_talk_recruitment_path, headers: auth_headers
         expect(response).to have_http_status(:ok)
+        expect(response.body).to include( event.name )
       end
     end
 

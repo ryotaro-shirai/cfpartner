@@ -1,7 +1,7 @@
 class Admin::TalkRecruitmentsController < AdminController
   def new
     @talk_recruitment = TalkRecruitment.new
-    @events = fetch_upcoming_events
+    @events = fetch_accepting_cfp_events
   end
 
   def create
@@ -10,14 +10,14 @@ class Admin::TalkRecruitmentsController < AdminController
     if @talk_recruitment.save
       redirect_to new_admin_talk_recruitment_path, notice: "CfPを作成しました"
     else
-      @events = fetch_upcoming_events
+      @events = fetch_accepting_cfp_events
       render :new, status: :unprocessable_content
     end
   end
 
   private
-    def fetch_upcoming_events
-      Event.upcoming.order(:id)
+    def fetch_accepting_cfp_events
+      Event.accepting_cfp.order(:id)
     end
 
     def talk_recruitment_params

@@ -16,7 +16,7 @@ class Event < ApplicationRecord
     after_the_event: 3 # イベント終了
   }, default: 1
 
-  scope :upcoming, -> { where(status: :published_information) }
+  scope :accepting_cfp, -> { where(status: :published_information) }
 
   private
 
