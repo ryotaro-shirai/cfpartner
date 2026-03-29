@@ -9,12 +9,12 @@ class Admin::EventsController < AdminController
     if @event.save
       redirect_to new_admin_event_path, notice: "イベントを作成しました"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
   private
     def event_params
-      params.expect(event: [:name, :event_homepage_url, :event_start_at, :event_end_at, :url, :cfp_start_at, :cfp_end_at, :image_url])
+      params.expect(event: [ :name, :site_url, :thumbnail_url, :start_at, :end_at ])
     end
 end

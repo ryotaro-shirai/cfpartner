@@ -12,8 +12,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  
+
   namespace :admin do
-    resources :events, only: %i[index new create show edit update destroy]
+    resources :events, only: %i[new create]
+    resources :talk_recruitments, only: %i[new create]
   end
 end

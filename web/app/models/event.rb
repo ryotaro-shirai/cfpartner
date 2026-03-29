@@ -5,16 +5,18 @@ class Event < ApplicationRecord
   validates :name, length: { maximum: 50 }, presence: true
   validates :status, presence: true
   validates :start_at, presence: true
-  validates :end_at, presence: true 
+  validates :end_at, presence: true
   validate :event_start_at_should_be_before_end_at
 
-  self.ignored_columns = [:deprecated_cfp_start_at, :deprecated_cfp_end_at, :deprecated_cfp_site_url]
+  self.ignored_columns = [ :deprecated_cfp_start_at, :deprecated_cfp_end_at, :deprecated_cfp_site_url ]
 
   enum :status, {
     published_information: 1, # イベント情報公開
     now_on_the_event: 2, # イベント開催中
-    after_the_event: 3, # イベント終了
+    after_the_event: 3 # イベント終了
   }, default: 1
+
+  scope :accepting_cfp, -> { where(status: :published_information) }
 
   private
 

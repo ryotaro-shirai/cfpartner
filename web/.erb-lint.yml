@@ -1,0 +1,16 @@
+---
+glob: "**/*.{html,text,js}{+*,}.erb"
+exclude:
+  - '**/vendor/**/*'
+  - '**/node_modules/**/*'
+linters:
+  FinalNewline:
+    enabled: true
+  Indentation:
+    enabled: true
+  TrailingWhitespace:
+    enabled: true
+  SpaceAroundErbTag:
+    enabled: true
+  SelfClosingTag:
+    enabled: false

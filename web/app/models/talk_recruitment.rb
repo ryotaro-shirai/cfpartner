@@ -8,14 +8,14 @@ class TalkRecruitment < ApplicationRecord
     no_information: 1,
     published_information: 2, # 募集情報公開
     now_on_call: 3, # 募集中
-    finished_call: 4, # 募集終了
+    finished_call: 4 # 募集終了
   }, default: 1
 
   enum :talk_type, {
     session: 1, # セッション
     short_session: 2, # ショートセッション
     lightning_talk: 3, # LT
-    other: 4, # その他
+    other: 4 # その他
   }, default: 1
 
   private
